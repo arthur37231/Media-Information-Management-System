@@ -1,0 +1,35 @@
+{% include 'top.html' %}
+    <div class="content">
+        <h1 class="title">Search Podcast Episodes</h1>
+
+        <form class="Search" method="POST" action="{{url_for('search_podcasteps')}}">
+            <input type="text" name="searchterm" placeholder="Podcast Episodes" autofocus required>
+            <button class="flat" type="submit">Search</button>
+        </form>
+            {% if podcasteps | length > 0 %}
+                <!-- All Podcast Episodes -->
+                <table class="styled">
+                    <thead>
+                        <tr>
+                            <td>Podcast Episode ID</td>
+                            <td>Podcast Episode Name</td>
+                            <td>Podcast Episode Published Date</td>
+                            <td>Podcast Episode Length</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for instance in podcasteps %}
+                            <!-- Each row is a link to each individual podcast episode page -->
+                            <tr class="clickable-tr" data-href="{{ url_for('single_podcastep', media_id=instance.media_id)}}">
+                                <td style="text-align: center">{{ instance.media_id }}</td>
+                                <td>{{instance.podcast_episode_title}}</td>
+                                <td>{{instance.podcast_episode_published_date}}</td>
+                                <td>{{instance.podcast_episode_length}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+        
+                </table>
+            {% endif %}
+    </div>
+{% include 'bottom.html'%}
